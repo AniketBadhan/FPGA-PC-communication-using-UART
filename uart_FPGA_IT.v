@@ -1,13 +1,13 @@
 `timescale 1ns / 1ps
 
 module uart_FPGA_IT(
-		clk,
-		reset,
-		rx_in,
-		tx_out
+	clk,
+	reset,
+	rx_in,
+	tx_out
     );
 
-		//port declarations
+	//port declarations
 	input clk;
 	input reset;
 	input rx_in;
@@ -81,7 +81,7 @@ module uart_FPGA_IT(
 				uld_rx_data <= 1'b0;
 				rx_enable <= 1'b1;
 				rx_state <= 3'b001;
-			end
+			 end
 		3'b001 : begin
 				if(rx_empty == 1'b1) begin
 					uld_rx_data <= 1'b0;
@@ -89,32 +89,32 @@ module uart_FPGA_IT(
 					clk_cnt <= 2'b00;
 					rx_state <= 3'b010;
 				end
-			end
+			 end
 		3'b010 : begin
-						if(rx_empty == 1'b0) begin
-							uld_rx_data <= 1'b1;
-							rx_state <= 3'b011;
-						end
+				if(rx_empty == 1'b0) begin
+					uld_rx_data <= 1'b1;
+					rx_state <= 3'b011;
 				end
+			 end
 		3'b011 : begin
-						rx_state <= 3'b100;
-				end
+				rx_state <= 3'b100;
+			 end
 		3'b100 : begin
-						if(rx_data_cnt == 2'b01) begin
-							red_rx_data <= rx_data;
-						end
-						if(rx_data_cnt == 2'b10) begin
-							green_rx_data <= rx_data;
-						end
-						if(rx_data_cnt == 2'b11) begin
-							blue_rx_data <= rx_data;
-							start_conversion <= 1'b1;
-						end
-						rx_state <= 3'b101;
+				if(rx_data_cnt == 2'b01) begin
+					red_rx_data <= rx_data;
 				end
+				if(rx_data_cnt == 2'b10) begin
+					green_rx_data <= rx_data;
+				end
+				if(rx_data_cnt == 2'b11) begin
+					blue_rx_data <= rx_data;
+					start_conversion <= 1'b1;
+				end
+				rx_state <= 3'b101;
+			 end
 		3'b101 : begin
-						rx_state <= 3'b001;
-				end
+				rx_state <= 3'b001;
+			 end
 		endcase
 	end
 
@@ -173,7 +173,7 @@ module uart_FPGA_IT(
 		 .new_green(green_tx_data),
 		 .new_blue(blue_tx_data),
 		 .done(conversion_done)
-    );
+	);
 
 
 	uart uut (
@@ -191,6 +191,4 @@ module uart_FPGA_IT(
 		.rx_in(temp_rx_in),
 		.rx_empty(rx_empty)
 	);
-
-
 endmodule
